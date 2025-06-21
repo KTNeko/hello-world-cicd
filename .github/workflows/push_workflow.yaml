@@ -1,9 +1,10 @@
-name: "PR Workflow - Build & Test"
+name: "Push Workflow - Build & Test"
 
 on:
-  pull_request:
+  push:
     branches:
       - main
+      - develop
 
 jobs:
   build-and-test:
@@ -49,3 +50,18 @@ jobs:
           name: build-files
           path: app/build/
           retention-days: 7
+      
+      - name: Create deployment package
+        run: |
+          cd app
+          mkdir -p deployment
+          cp -r src/ deployment/
+          cp package.json deployment/
+          cp tsconfig.json deployment/
+      
+      - name: Upload deployment package
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-package
+          path: app/deployment/
+          retention-days: 30 
