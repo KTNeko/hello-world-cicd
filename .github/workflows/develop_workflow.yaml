@@ -8,9 +8,6 @@ on:
 jobs:
   enhanced-testing:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,14 +37,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-coverage
-          path: app/coverage/
+          path: coverage/
           retention-days: 30
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-files
-          path: app/build/
+          path: build/
           retention-days: 7
       
       - name: Security audit

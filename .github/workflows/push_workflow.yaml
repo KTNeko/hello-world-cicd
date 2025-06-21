@@ -12,39 +12,33 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Use Node.js
+      
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: app/package-lock.json
-
+      
       - name: Install dependencies
         run: npm ci
-        working-directory: app
-
-      - name: Run lint
+      
+      - name: Run linting
         run: npm run lint
-        working-directory: app
-
-      - name: Run type-check
+      
+      - name: Run type checking
         run: npm run type-check
-        working-directory: app
-
-      - name: Run test
+      
+      - name: Run unit tests
         run: npm test
-        working-directory: app
-
-      - name: Build
+      
+      - name: Build application
         run: npm run build
-        working-directory: app
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-files
-          path: app/build/
+          path: build/
           retention-days: 7
       
       - name: Create deployment package
@@ -58,5 +52,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: deployment-package
-          path: app/deployment/
+          path: deployment/
           retention-days: 30 

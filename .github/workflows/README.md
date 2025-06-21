@@ -58,10 +58,23 @@ PRフロー:
 ワークフローをローカルでテストする場合：
 
 ```bash
-cd app
 npm install
 npm run lint
 npm run type-check
 npm test
 npm run build
+```
+
+## プロジェクト構成
+
+```
+hello-world-cicd/
+├── src/                  # ソースコード
+├── __tests__/           # テストファイル
+├── package.json         # 依存関係とスクリプト
+├── tsconfig.json        # TypeScript設定
+├── .eslintrc.js         # ESLint設定
+├── .prettierrc          # Prettier設定
+├── .github/workflows/   # GitHub Actionsワークフロー
+└── README.md            # プロジェクト説明
 ``` 
