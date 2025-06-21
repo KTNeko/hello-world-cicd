@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,29 +23,19 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: |
-          cd app
-          npm ci
+        run: npm ci
       
       - name: Run linting
-        run: |
-          cd app
-          npm run lint
+        run: npm run lint
       
       - name: Run type checking
-        run: |
-          cd app
-          npm run type-check
+        run: npm run type-check
       
       - name: Run unit tests
-        run: |
-          cd app
-          npm test
+        run: npm test
       
       - name: Build application
-        run: |
-          cd app
-          npm run build
+        run: npm run build
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -53,7 +46,6 @@ jobs:
       
       - name: Create deployment package
         run: |
-          cd app
           mkdir -p deployment
           cp -r src/ deployment/
           cp package.json deployment/

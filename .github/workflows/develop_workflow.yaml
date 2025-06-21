@@ -8,6 +8,9 @@ on:
 jobs:
   enhanced-testing:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,29 +22,19 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: |
-          cd app
-          npm install
+        run: npm ci
       
       - name: Run linting
-        run: |
-          cd app
-          npm run lint
+        run: npm run lint
       
       - name: Run type checking
-        run: |
-          cd app
-          npm run type-check
+        run: npm run type-check
       
       - name: Run unit tests with coverage
-        run: |
-          cd app
-          npm test -- --coverage
+        run: npm test -- --coverage
       
       - name: Build application
-        run: |
-          cd app
-          npm run build
+        run: npm run build
       
       - name: Upload test coverage
         uses: actions/upload-artifact@v4
@@ -58,6 +51,4 @@ jobs:
           retention-days: 7
       
       - name: Security audit
-        run: |
-          cd app
-          npm audit --audit-level moderate 
+        run: npm audit --audit-level moderate 
